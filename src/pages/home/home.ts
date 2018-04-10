@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { SpeechRecognition } from '../../providers/speech-recognition.service';
 
 @Component({
   selector: 'page-home',
@@ -7,8 +7,37 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  public transcription: string;
 
+  constructor(public speechRecognition: SpeechRecognition) {
+    this.speechRecognition.recognizer.continuous      = true;
+    this.speechRecognition.recognizer.interimResults  = true;
+    this.speechRecognition.recognizer.onresult        = this.onTranscriptionResult.bind(this);
+    this.speechRecognition.recognizer.onerror         = this.onTranscriptionError.bind(this);
   }
 
+  public toggleSpeechRecognition() {
+    if (!this.speechRecognition.isRecording) {
+      this.speechRecognition.start();
+    } else {
+      this.speechRecognition.stop();
+    }
+  }
+
+  private onTranscriptionResult(event) {
+    this.transcription = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        this.transcription = event.results[i][0].transcript;
+      } else {
+        this.transcription += event.results[i][0].transcript;
+      }
+    }
+
+    console.log(this.transcription);
+  }
+
+  private onTranscriptionError(event) {
+    console.log('onTranscriptionError', event);
+  }
 }
