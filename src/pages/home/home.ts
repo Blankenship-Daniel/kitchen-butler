@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { SpeechRecognition } from '../../providers/speech-recognition.service';
 
 @Component({
@@ -9,7 +9,7 @@ export class HomePage {
 
   public transcription: string;
 
-  constructor(public speechRecognition: SpeechRecognition) {
+  constructor(private speechRecognition: SpeechRecognition, private cd: ChangeDetectorRef) {
     this.speechRecognition.recognizer.continuous      = true;
     this.speechRecognition.recognizer.interimResults  = true;
     this.speechRecognition.recognizer.onresult        = this.onTranscriptionResult.bind(this);
@@ -33,8 +33,7 @@ export class HomePage {
         this.transcription += event.results[i][0].transcript;
       }
     }
-
-    console.log(this.transcription);
+    this.cd.detectChanges();
   }
 
   private onTranscriptionError(event) {

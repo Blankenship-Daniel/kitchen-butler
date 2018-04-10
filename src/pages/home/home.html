@@ -1,16 +1,7 @@
-<!-- <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Kitchen Butler</ion-title>
-  </ion-navbar>
-</ion-header> -->
-
 <ion-content padding>
   <ion-item>
-    <ion-label floating>Message</ion-label>
-    <ion-textarea [(ngModel)]="transcription"></ion-textarea>
+    <ion-label color="primary" floating>What's in your fridge?</ion-label>
+    <ion-textarea [(ngModel)]="transcription" clearInput></ion-textarea>
   </ion-item>
   <ion-fab right bottom>
     <button (click)="toggleSpeechRecognition()" ion-fab color="primary">
