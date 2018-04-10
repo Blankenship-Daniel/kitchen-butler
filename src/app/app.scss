@@ -17,4 +17,8 @@
 
 textarea {
 	resize: both;
- }
+}
+
+.content-md {
+	background-color: color($colors, app-background, base);
+}

@@ -1,10 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Kitchen Butler</ion-title>
+  </ion-navbar>
+</ion-header>
+
 <ion-content padding>
-  <ion-item>
-    <ion-label color="primary" floating>What's in your fridge?</ion-label>
-    <ion-textarea [(ngModel)]="transcription" clearInput></ion-textarea>
-  </ion-item>
+  <ion-card>
+    <ion-card-header>
+      What's in your fridge?
+    </ion-card-header>
+    <ion-card-content>
+      {{ transcription }}
+    </ion-card-content>
+  </ion-card>
   <ion-fab right bottom>
-    <button (click)="toggleSpeechRecognition()" ion-fab color="primary">
+    <button
+      [ngClass]="{'recording': speechRecognition.isRecording}"
+      (click)="toggleSpeechRecognition()"
+      ion-fab
+      color="primary">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>

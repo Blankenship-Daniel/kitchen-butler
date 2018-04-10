@@ -7,9 +7,12 @@ import { SpeechRecognition } from '../../providers/speech-recognition.service';
 })
 export class HomePage {
 
-  public transcription: string;
+  public transcription: string = `Press the mic button to make a request...`;
 
-  constructor(private speechRecognition: SpeechRecognition, private cd: ChangeDetectorRef) {
+  constructor(
+    public speechRecognition: SpeechRecognition,
+    private cd: ChangeDetectorRef
+  ) {
     this.speechRecognition.recognizer.continuous      = true;
     this.speechRecognition.recognizer.interimResults  = true;
     this.speechRecognition.recognizer.onresult        = this.onTranscriptionResult.bind(this);
@@ -28,6 +31,7 @@ export class HomePage {
     this.transcription = '';
     for (let i = event.resultIndex; i < event.results.length; i++) {
       if (event.results[i].isFinal) {
+        this.speechRecognition.stop();
         this.transcription = event.results[i][0].transcript;
       } else {
         this.transcription += event.results[i][0].transcript;
