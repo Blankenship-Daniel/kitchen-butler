@@ -13,16 +13,9 @@
       What's in your fridge?
     </ion-card-header>
     <ion-card-content>
-      {{ transcription }}
+      {{ transcription | async }}
     </ion-card-content>
   </ion-card>
-  <ion-fab right bottom>
-    <button
-      [ngClass]="{'recording': speechRecognition.isRecording}"
-      (click)="toggleSpeechRecognition()"
-      ion-fab
-      color="primary">
-      <ion-icon name="mic"></ion-icon>
-    </button>
-  </ion-fab>
+
+  <app-mic></app-mic>
 </ion-content>
